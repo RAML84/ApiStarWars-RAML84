@@ -15,31 +15,12 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name":self.name,
+            "name": self.name,
             "email": self.email,
             # do not serialize the password, its a security breach
         }
-    
 
-class People(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    gender = db.Column(db.String(120), unique=True, nullable=False)
-    hair_color = db.Column(db.String(120), unique=True, nullable=False)
-    
-    def __repr__(self):
-        return '<People %r>' % self.name
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "gender": self.gender,
-            "hair_color": self.hair_color
-
-            # do not serialize the password, its a security breach
-        }
-    
 class Planets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
@@ -53,8 +34,27 @@ class Planets(db.Model):
         return {
             "id" : self.id,
             "name": self.name,
-            "description": self.description,
             "diameter": self.diameter,
+            "description": self.description
+        }
+
+
+class People(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+    name = db.Column(db.String(80))
+    description = db.Column(db.String(250))
+    gender = db.Column(db.String(80))
+    height = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<People %r>' % self.id
+    
+    def serialize(self):
+        return {
+                "name": self.name,
+                "description": self.description,
+                "gender": self.gender,
+                "height": self.height
         }
 
 class Favorites(db.Model):
@@ -72,12 +72,5 @@ class Favorites(db.Model):
             "user_id": self.user_id,
             "planet_id": self.planet_id,
             "people_id": self.people_id,
-
-            
             # do not serialize the password, its a security breach
         }
-    
-
-
-
-

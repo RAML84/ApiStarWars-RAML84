@@ -37,7 +37,6 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-
    #-----------------METODOS GET---------------# 
 
     ## GET USER
@@ -47,15 +46,12 @@ def getUser():
     result = [element.serialize() for element in user]
     return jsonify(result), 200
 
-
-
    ## GET PEOPLE
 @app.route('/people', methods=['GET'])
 def getPeople():
     people = People.query.all()
     result = [element.serialize() for element in people]
     return jsonify(result), 200
-
 
   ## GET PLANETS
 @app.route('/planet', methods=['GET'])
@@ -64,8 +60,6 @@ def getPlanets():
     result = [element.serialize() for element in planets]
     return jsonify(result), 200
 
-
-
   ## GET FAVORITES
 @app.route('/favorite', methods=['GET'])
 def getFavorites():
@@ -73,17 +67,14 @@ def getFavorites():
     result = [element.serialize() for element in favorites]
     return jsonify(result), 200
 
-
-
 #-----------------METODOS GET POR ID---------------# 
 
-### GET USER ID
+                   ### GET USER ID
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user_id(user_id):
     user = User.query.get(user_id)
     result = user.serialize()
     return jsonify(result), 200
-
 
 ### GET PEOPLE ID
 @app.route('/people/<int:people_id>', methods=['GET'])
@@ -92,7 +83,6 @@ def get_people_id(people_id):
     result = people.serialize()
     return jsonify(result), 200
 
-
 ### GET PLANETS ID
 @app.route('/planet/<int:planet_id>', methods=['GET'])
 def get_planet_id(planet_id):
@@ -100,15 +90,12 @@ def get_planet_id(planet_id):
     result = planet.serialize()
     return jsonify(result), 200
 
-
-
 ### GET FAVORITES ID
 @app.route('/favorite/<int:favorite_id>', methods=['GET'])
 def get_favorite_id(favorite_id):
     favorite = Favorites.query.get(favorite_id)
     result = favorite.serialize()
     return jsonify(result), 200
-
 
 #-----------------METODOS POST---------------# 
 
@@ -123,19 +110,16 @@ def createUser():
 
     return jsonify(newUser.serialize())
 
-
 ### POST PEOPLE
 @app.route('/people', methods= ['POST'])
 def createPeople():
     data= request.data
     data = json.loads(data)
-    people = People(name = data["name"], gender = data["gender"], hair_color = data["hair_color"])
+    people = People(id = data["id"], name = data["name"], description= data["description"], gender = data["gender"], height = data["height"])
     db.session.add(people)
     db.session.commit()
 
     return jsonify(people.serialize())
-
-
 
 ### POST PLANETS
 @app.route('/planet', methods= ['POST'])
@@ -147,7 +131,6 @@ def createPlanet():
     db.session.commit()
 
     return jsonify(planet.serialize())
-
 
 #-----------------METODOS DELETE---------------# 
 
@@ -169,10 +152,8 @@ def deletePlanet(planet_id):
     db.session.delete(planet)
     db.session.commit()
 
-    response_body = {"msg": "borrado"}
+    response_body = {"msg": "DELETE"}
     return jsonify(planet.serialize())
-
-
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
